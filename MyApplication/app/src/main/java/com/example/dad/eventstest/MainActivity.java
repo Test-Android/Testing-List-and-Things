@@ -1,6 +1,7 @@
 package com.example.dad.eventstest;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -19,6 +20,11 @@ public class MainActivity extends ActionBarActivity
     public static TextView text;
     public static EditText eText;
     public static String[] arraySpinner;
+    public static String[] colors;
+    public static String[] fonts;
+    public static Spinner s;
+    public static Spinner s2;
+    public static Spinner s3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,11 +35,25 @@ public class MainActivity extends ActionBarActivity
         eText = (EditText)findViewById(R.id.editText);
         this.arraySpinner = new String[]{"Default string","Default string"
                 ,"Default string","Default string"};
-        Spinner s = (Spinner) findViewById(R.id.spinner);
+        this.colors = new String[]{"Black","Red","Blue","Cyan"};
+        this.fonts = new String[]{"Default", "Monospace", "Sans Serif","Sans"};
+
+        s = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         s.setAdapter(adapter);
-        s.setOnItemSelectedListener(new myListener());
+
+        s2 = (Spinner) findViewById(R.id.spinner2);
+        ArrayAdapter<String> a2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, colors);
+        s2.setAdapter(a2);
+        s2.setOnItemSelectedListener(new cListen());
+
+        s3 = (Spinner) findViewById(R.id.spinner3);
+        ArrayAdapter<String> a3 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, fonts);
+        s3.setAdapter(a3);
+        s3.setOnItemSelectedListener(new fListen());
 
     }
     public static void cText(View view)
@@ -73,34 +93,53 @@ public class MainActivity extends ActionBarActivity
         }
         return true;
     }
-    public class myListener implements AdapterView.OnItemSelectedListener
+    public class cListen implements AdapterView.OnItemSelectedListener
     {
         public void onItemSelected(AdapterView<?> parent, View view,
                                    int pos, long id)
         {
             if(pos == 0)
             {
-                text.setText(arraySpinner[0]);
                 MainActivity.text.setTextColor(Color.BLACK);
             }
             else if(pos == 1)
             {
-                text.setText(arraySpinner[1]);
                 MainActivity.text.setTextColor(Color.RED);
             }
             else if(pos == 2)
             {
-                text.setText(arraySpinner[2]);
                 MainActivity.text.setTextColor(Color.BLUE);
             }
             else if(pos == 3)
             {
-                text.setText(arraySpinner[3]);
                 MainActivity.text.setTextColor(Color.CYAN);
             }
         }
-        public void onNothingSelected(AdapterView parent)
-        {}
+        public void onNothingSelected(AdapterView parent) {}
+    }
+    public class fListen implements AdapterView.OnItemSelectedListener
+    {
+        public void onItemSelected(AdapterView<?> parent, View view,
+                                   int pos, long id)
+        {
+            if(pos == 0)
+            {
+                MainActivity.text.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
+            }
+            else if(pos == 1)
+            {
+                MainActivity.text.setTypeface(Typeface.MONOSPACE, Typeface.BOLD);
+            }
+            else if(pos == 2)
+            {
+                MainActivity.text.setTypeface(Typeface.SANS_SERIF, Typeface.BOLD);
+            }
+            else if(pos == 3)
+            {
+                MainActivity.text.setTypeface(Typeface.SERIF, Typeface.BOLD);
+            }
+        }
+        public void onNothingSelected(AdapterView parent) {}
     }
 
 }
